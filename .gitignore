@@ -1,0 +1,8 @@
+#dependencies
+node_modules
+
+#build
+dist
+
+#OS-specific
+.DS_Store

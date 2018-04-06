@@ -1,0 +1,19 @@
+{
+  "env": {
+      "browser": true,
+      "jest/globals": true
+  },
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+      "flowtype",
+      "jest"
+  ],
+  "rules": {
+      "complexity": ["error", 2],
+      "flowtype/define-flow-type": 1,
+      "flowtype/use-flow-type": 1,
+      "react/forbid-prop-types": 0,
+      "react/prop-types": 0
+  }
+}
