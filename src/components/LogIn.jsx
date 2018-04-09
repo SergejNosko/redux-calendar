@@ -3,8 +3,8 @@ import React from 'react';
 class LogIn extends React.Component {
   constructor() {
     super();
-    login: null;
-    password: null;
+    this.login = null;
+    this.password = null;
   }
 
   onSubmit = (e) => {
@@ -20,7 +20,11 @@ class LogIn extends React.Component {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => { this.props.history.push('/calendar') })
+      .then(res => res.json())
+      .then((res) => {
+        window.localStorage.setItem('username', res.username);
+        this.props.history.push('/calendar');
+      })
       .catch((err) => {
         console.log(err);
       });

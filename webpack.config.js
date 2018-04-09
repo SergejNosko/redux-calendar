@@ -5,6 +5,7 @@ module.exports = {
     entry: {
         app: './src/app',
         facade: './src/facade',
+        styles: './src/public/styles/style.scss',
     },
 
     output: {
@@ -37,7 +38,6 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
@@ -48,7 +48,6 @@ module.exports = {
                                 sourceMap: true,
                                 includePaths: [
                                     path.resolve(process.cwd(), 'assets/vendor'),
-                                    path.resolve(process.cwd(), 'src'),
                                 ],
                             },
                         },

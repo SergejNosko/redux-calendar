@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import { Route } from 'react-router';
 import LogIn from './LogIn';

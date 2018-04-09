@@ -1,0 +1,24 @@
+.main-menu{
+
+  &__list{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+  &__item{
+    margin: 0 10px;
+  }
+
+  &__button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all ease .3s;
+    
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}

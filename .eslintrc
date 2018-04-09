@@ -10,7 +10,7 @@
       "jest"
   ],
   "rules": {
-      "complexity": ["error", 2],
+      "complexity": ["error", 3],
       "flowtype/define-flow-type": 1,
       "flowtype/use-flow-type": 1,
       "react/forbid-prop-types": 0,
