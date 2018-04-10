@@ -26,7 +26,7 @@ db.once('open', () => {
 const { Schema } = mongoose;
 const MongoStore = require('connect-mongo')(session);
 const eventSchema = new Schema({
-  _id: Schema.Types.ObjectId, title: String, start: Number, duration: Number,
+  _id: Schema.Types.ObjectId, title: String, start: Number, end: Number,
 });
 const userSchema = new Schema({ name: String, password: String, events: [eventSchema] });
 const User = mongoose.model('User', userSchema);
@@ -40,8 +40,8 @@ app.use(session({
 
 function getInitialState() {
   return {
-    username: '',
     isModalVisible: false,
+    events: [],
   };
 }
 
@@ -68,6 +68,20 @@ function renderFullPage(html, preloadedState) {
     </html>
     `;
 }
+
+const createPageStructure = (req, res, preloadedState) => {
+  const store = createStore(rootReducer, preloadedState);
+
+  const html = renderToString(<Provider store={store}>
+    <StaticRouter context={{}} location={req.url}>
+      <RenderRoutes />
+    </StaticRouter>
+  </Provider>);
+
+  const finalState = store.getState();
+
+  res.send(renderFullPage(html, finalState));
+};
 
 app.post('/login', (req, res) => {
   const { name, password } = req.body;
@@ -99,52 +113,27 @@ app.post('/add', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  if (req.session.username) {
-    const preloadedState = getInitialState();
-    User.findOne({ name: req.session.username }, (err, user) => {
-      const store = createStore(rootReducer, preloadedState);
+  const preloadedState = getInitialState();
 
-      const html = renderToString(<Provider store={store}>
-        <StaticRouter context={{}} location='/calendar'>
-          <RenderRoutes />
-        </StaticRouter>
-      </Provider>);
+  createPageStructure(req, res, preloadedState);
+});
 
-      const finalState = store.getState();
-
-      res.send(renderFullPage(html, finalState));
+app.get('/calendar', (req, res) => {
+  const { username } = req.query;
+  if (username) {
+    User.findOne({ name: username }, (err, user) => {
+      if (err) console.log(err);
+      if (user) {
+        res.json({ user });
+      } else {
+        console.log(err);
+      }
     });
   } else {
     const preloadedState = getInitialState();
 
-    const store = createStore(rootReducer, preloadedState);
-
-    const html = renderToString(<Provider store={store}>
-      <StaticRouter context={{}} location={req.url}>
-        <RenderRoutes />
-      </StaticRouter>
-    </Provider>);
-
-    const finalState = store.getState();
-
-    res.send(renderFullPage(html, finalState));
+    createPageStructure(req, res, preloadedState);
   }
-});
-
-app.get('/calendar', (req, res) => {
-  const preloadedState = getInitialState();
-
-  const store = createStore(rootReducer, preloadedState);
-
-  const html = renderToString(<Provider store={store}>
-    <StaticRouter context={{}} location="/calendar">
-      <RenderRoutes />
-    </StaticRouter>
-  </Provider>);
-
-  const finalState = store.getState();
-
-  res.send(renderFullPage(html, finalState));
 });
 
 app.listen(port, (err) => {

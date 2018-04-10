@@ -1,0 +1,12 @@
+.event{
+  box-sizing: border-box;
+  position: absolute;
+  right: 0;
+  background: #E2ECF5;
+  border-left: 2px solid #6E9ECF;
+  max-width: 240px;
+
+  &__title{
+    font: 14px "Open Sans";
+  }
+}

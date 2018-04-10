@@ -7,6 +7,12 @@ class LogIn extends React.Component {
     this.password = null;
   }
 
+  componentDidMount() {
+    if (window.localStorage.username) {
+      this.props.history.push('/calendar');
+    }
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
 

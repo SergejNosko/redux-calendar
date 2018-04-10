@@ -11,6 +11,16 @@ class ModalWindow extends React.Component {
     this.title = null;
   }
 
+  onClose = (e) => {
+    e.preventDefault();
+
+    this.start.value = '';
+    this.duration.value = '';
+    this.title.value = '';
+
+    this.props.hideModal();
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -30,12 +40,12 @@ class ModalWindow extends React.Component {
           className="modal-window__form"
           onSubmit={this.onSubmit}
         >
-          <input type="text" className="modal-window__text" ref={(node) => { this.start = node; }} placeholder="Start" />
-          <input type="text" className="modal-window__text" ref={(node) => { this.duration = node; }} placeholder="Duration" />
+          <input type="time" className="modal-window__text" ref={(node) => { this.start = node; }} placeholder="Start" />
+          <input type="time" className="modal-window__text" ref={(node) => { this.duration = node; }} placeholder="Duration" />
           <input type="text" className="modal-window__text" ref={(node) => { this.title = node; }} placeholder="Title" />
           <div className="modal-window__wrapper">
             <input type="submit" className="modal-window__submit" value="Submit" />
-            <button onClick={this.props.hideModal}>Close</button>
+            <button onClick={this.onClose}>Close</button>
           </div>
         </form>
       </div>

@@ -9,11 +9,17 @@ export const hideModal = () => ({
 });
 
 export const addEvent = event => (dispatch) => {
+  const start = ((event.start.split(':')[0] - 8) * 60) + +event.start.split(':')[1];
+  const end = ((event.end.split(':')[0] - 8) * 60) + +event.end.split(':')[1];
   fetch('/add', {
     method: 'POST',
     body: JSON.stringify({
       username: window.localStorage.username,
-      event,
+      event: {
+        ...event,
+        start,
+        end,
+      },
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -23,5 +29,14 @@ export const addEvent = event => (dispatch) => {
     .then((res) => {
       dispatch({ type: 'ADD_EVENT', payload: res.user.events });
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => console.log(err));
+};
+
+export const getEvents = username => (dispatch) => {
+  fetch(`/calendar?username=${username}`)
+    .then(res => res.json())
+    .then((res) => {
+      dispatch({ type: 'ADD_EVENT', payload: res.user.events });
+    })
+    .catch(err => console.log(err));
 };
