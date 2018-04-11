@@ -112,6 +112,27 @@ app.post('/add', (req, res) => {
   }
 });
 
+app.post('/remove', (req, res) => {
+  const { username, id } = req.body;
+  if (username) {
+    User.findOneAndUpdate(
+      { name: username },
+      { $pull: { events: { _id: id } } },
+      { new: true },
+      (err, user) => {
+        if (err) console.log(err);
+        if (user) {
+          res.send(user);
+        } else {
+          res.redirect('/');
+        }
+      },
+    );
+  } else {
+    res.redirect('/');
+  }
+});
+
 app.get('/', (req, res) => {
   const preloadedState = getInitialState();
 

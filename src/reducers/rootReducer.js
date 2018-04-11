@@ -6,7 +6,7 @@ export default (state = {}, action) => {
         isModalVisible: action.payload,
       };
     }
-    case 'ADD_EVENT': {
+    case 'CHANGE_EVENTS': {
       return {
         ...state,
         events: action.payload,

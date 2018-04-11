@@ -27,7 +27,7 @@ export const addEvent = event => (dispatch) => {
   })
     .then(res => res.json())
     .then((res) => {
-      dispatch({ type: 'ADD_EVENT', payload: res.user.events });
+      dispatch({ type: 'CHANGE_EVENTS', payload: res.user.events });
     })
     .catch(err => console.log(err));
 };
@@ -36,7 +36,25 @@ export const getEvents = username => (dispatch) => {
   fetch(`/calendar?username=${username}`)
     .then(res => res.json())
     .then((res) => {
-      dispatch({ type: 'ADD_EVENT', payload: res.user.events });
+      dispatch({ type: 'CHANGE_EVENTS', payload: res.user.events });
+    })
+    .catch(err => console.log(err));
+};
+
+export const removeEvent = (id, username) => (dispatch) => {
+  fetch('/remove', {
+    method: 'POST',
+    body: JSON.stringify({
+      id,
+      username,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(res => res.json())
+    .then((res) => {
+      dispatch({ type: 'CHANGE_EVENTS', payload: res.events });
     })
     .catch(err => console.log(err));
 };

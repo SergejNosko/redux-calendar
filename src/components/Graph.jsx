@@ -3,39 +3,30 @@ import { connect } from 'react-redux';
 import Event from './Event';
 
 class Graph extends React.Component {
+  splitEvents = (events) => {
+    const array = [[events[0]]];
+    for (let i = 1; i < events.length; i++) {
+      const current = events[i];
+      const prev = array[array.length - 1][array[array.length - 1].length - 1];
+
+      if (current.start <= prev.end) {
+        array[array.length - 1].push(current);
+      } else {
+        array.push([current]);
+      }
+    }
+    return array;
+  }
+
   renderEvents = () => {
     let { events } = this.props;
 
     if (!events.length) return;
 
-    const array = [];
-    let subArray = [];
-
     events = events
       .sort((prev, next) => (prev.start > next.start ? 1 : -1));
-    console.log(events);
 
-    for (let i = 1; i < events.length; i++) {
-      if (!subArray.length) {
-        subArray.push(events[i - 1]);
-        continue;
-      }
-      if (events[i].start <= subArray[subArray.length - 1].end) {
-        subArray.push(events[i - 1]);
-      } else {
-        array.push(subArray);
-        subArray = [];
-        subArray.push(events[i - 1]);
-        if (i === events.length - 1) {
-          if (events[i].start <= subArray[subArray.length - 1].end) {
-            array[array.length - 1].push(events[i]);
-          } else {
-            array[array.length - 1].push(events[i - 1]);
-            array.push([events[i]]);
-          }
-        }
-      }
-    }
+    const array = this.splitEvents(events);
 
     events = array.map(event => event.map((e, i) => ({
       height: e.end - e.start,
@@ -46,10 +37,8 @@ class Graph extends React.Component {
       right: (240 / event.length) * i,
     })));
 
-    console.log(events);
-
     return events.map(event => event.map((e, i) => (
-      <Event key={e.id} right={e.right} title={e.title} height={e.height} width={e.width} top={e.top} />
+      <Event key={e.id} id={e.id} right={e.right} title={e.title} height={e.height} width={e.width} top={e.top} />
     )));
   }
 

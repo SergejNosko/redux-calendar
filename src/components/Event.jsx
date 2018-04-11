@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { removeEvent } from '../actions/index';
 
 class Event extends React.Component {
   onClick = () => {
-
+    this.props.removeEvent(this.props.id, window.localStorage.username);
   }
 
   render() {
@@ -23,4 +25,8 @@ class Event extends React.Component {
   }
 }
 
-export default Event;
+const mapDispatchToProps = {
+  removeEvent,
+};
+
+export default connect(null, mapDispatchToProps)(Event);
