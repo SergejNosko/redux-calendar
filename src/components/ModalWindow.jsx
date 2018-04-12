@@ -18,7 +18,7 @@ class ModalWindow extends React.Component {
     this.duration.value = '';
     this.title.value = '';
 
-    this.props.hideModal();
+    this.props.hideModal({ isModalVisible: false });
   }
 
   onSubmit = (e) => {

@@ -3,7 +3,7 @@ export default (state = {}, action) => {
     case 'CHANGE_MODAL_VISIBILITY': {
       return {
         ...state,
-        isModalVisible: action.payload,
+        ...action.payload,
       };
     }
     case 'CHANGE_EVENTS': {

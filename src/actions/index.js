@@ -1,11 +1,11 @@
-export const showModal = () => ({
+export const showModal = prop => ({
   type: 'CHANGE_MODAL_VISIBILITY',
-  payload: true,
+  payload: prop,
 });
 
-export const hideModal = () => ({
+export const hideModal = prop => ({
   type: 'CHANGE_MODAL_VISIBILITY',
-  payload: false,
+  payload: prop,
 });
 
 export const addEvent = event => (dispatch) => {

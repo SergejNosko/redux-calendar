@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   display: none;
   flex-direction: column;
   align-items: center;
@@ -37,5 +37,32 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+  }
+}
+
+.json-modal{
+  position: absolute;
+  min-width: 200px;
+  min-height: 200px;
+  background: #fff;
+  margin: auto;
+  padding: 10px;
+
+  &_active{
+    display: block;
+  }
+
+  &__list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item{
+    margin-bottom: 10px;
+  }
+
+  &__button{
+    margin-top: 10px;
   }
 }

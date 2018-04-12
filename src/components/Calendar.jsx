@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import MainMenu from './MainMenu';
 import ModalWindow from './ModalWindow';
 import Graph from './Graph';
+import JSONModal from './JSONModal';
 import { getEvents } from '../actions/index';
 
 class Calendar extends React.Component {
@@ -19,8 +20,9 @@ class Calendar extends React.Component {
     return (
       <div className="calendar">
         <h1>Calendar</h1>
-        <MainMenu />
+        <MainMenu history={this.props.history} />
         <ModalWindow />
+        <JSONModal />
         <Graph />
       </div>
     );

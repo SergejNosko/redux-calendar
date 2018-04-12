@@ -5,6 +5,8 @@
   background: #E2ECF5;
   border-left: 2px solid #6E9ECF;
   max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &__title{
     font: 14px "Open Sans";

@@ -7,7 +7,7 @@ class Graph extends React.Component {
     const array = [[events[0]]];
     for (let i = 1; i < events.length; i++) {
       const current = events[i];
-      const prev = array[array.length - 1][array[array.length - 1].length - 1];
+      const prev = array[array.length - 1][array[array.length - 1].length - 1]; // the last pushed event
 
       if (current.start <= prev.end) {
         array[array.length - 1].push(current);

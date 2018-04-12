@@ -41,6 +41,7 @@ app.use(session({
 function getInitialState() {
   return {
     isModalVisible: false,
+    isJSONModalVisible: false,
     events: [],
   };
 }
